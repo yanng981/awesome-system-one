@@ -4,7 +4,7 @@ A curated list of **System One decision models**: models that answer typed quest
 
 TypeSafe named the category with Jev on September 15, 2026. Within days, open models appeared that you can download, fine-tune and self-host, several of them behind the same `POST /v1/systemone` API.
 
-- **12 models**, last checked against each project's own pages on **2026-09-25**.
+- **13 models**, last checked against each project's own pages on **2026-09-25**.
 - Facts come from each project's README or model card. Benchmarks are self-reported and not directly comparable.
 - The list is generated from the [System One models comparison](https://laya-ai.com/system-one-models) on laya-ai.com and refreshed automatically.
 
@@ -19,6 +19,7 @@ TypeSafe named the category with Jev on September 15, 2026. Within days, open mo
 | **Von** | wfzyx | Trained encoder, non-autoregressive | 395M | Apache 2.0 | Yes, a /v1/systemone server | [Source](https://github.com/wfzyx/von) · [Guide](https://laya-ai.com/system-one-models/von) |
 | **Bespoke Nimble** | Bespoke Labs | Fine-tuned model with training recipe | 9B | Not stated in the repository | No, its own schema format | [Source](https://github.com/bespokelabsai/nimble) |
 | **SemIf (formerly OpenJev)** | TheoLeeCJ | Training-free, reads option probabilities from open LLMs | Depends on the model (2B to 27B tested) | MIT | Reproduces the interface pattern | [Source](https://github.com/TheoLeeCJ/SemIf-OpenJev) |
+| **Rizzo Flow** | Rizzo AI Academy | Fine-tuned LLM (Spark-X2.5) on llama.cpp | 1.7B / 4B | Apache 2.0 | Yes, POST /v1/systemone | [Source](https://github.com/Rizzo-AI-Academy/rizzo-flow) |
 | **AnyJev** | Nokia Applied Research | Training-free library over existing LLMs | Depends on the model | Apache 2.0 | Serves its own decision endpoint | [Source](https://github.com/nokia-applied-research/AnyJev) |
 | **NanoJev** | TianyuCodings | Small parallel decision model | 0.6B | MIT | Not stated | [Source](https://github.com/TianyuCodings/NanoJev) |
 | **Tev1-4B-experimental** | Together AI | Fine-tuned LLM, answers with one option letter | 4B | Weights license being finalized; code MIT | No, chat completions with 2 to 24 options | [Source](https://huggingface.co/togethercomputer/Tev1-4B-experimental) · [Guide](https://laya-ai.com/system-one-models/tev1) |
@@ -29,7 +30,7 @@ TypeSafe named the category with Jev on September 15, 2026. Within days, open mo
 
 ### TypeSafe Jev
 
-The hosted model that introduced the System One name and the choice, score and noul question types. In early access and billed per token.
+The hosted model that introduced the System One name and the choice, score and noul question types. Generally available and billed per token.
 
 - **Runs on:** TypeSafe cloud only
 - **Languages:** Provider-dependent
@@ -82,6 +83,14 @@ Scores typed options directly from a frozen open model with no answer text or JS
 - **Runs on:** RTX 3090, Apple Silicon, browser (WebGPU demo)
 - **Languages:** Depends on the model
 - [Source](https://github.com/TheoLeeCJ/SemIf-OpenJev)
+
+### Rizzo Flow
+
+A local take on Jev with a LoRA fine-tune of Spark-X2.5. The project reports 0.648 on typed-decisions against 0.727 for Jev, and notes that probabilities are uncalibrated unless you calibrate them on your own data.
+
+- **Runs on:** llama.cpp: CUDA, Metal, Vulkan, ROCm, SYCL or CPU
+- **Languages:** Not stated
+- [Source](https://github.com/Rizzo-AI-Academy/rizzo-flow)
 
 ### AnyJev
 
