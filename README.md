@@ -4,7 +4,7 @@ A curated list of **System One decision models**: models that answer typed quest
 
 TypeSafe named the category with Jev on September 15, 2026. Within days, open models appeared that you can download, fine-tune and self-host, several of them behind the same `POST /v1/systemone` API.
 
-- **13 models**, last checked against each project's own pages on **2026-09-25**.
+- **20 models**, last checked against each project's own pages on **2026-09-27**.
 - Facts come from each project's README or model card. Benchmarks are self-reported and not directly comparable.
 - The list is generated from the [System One models comparison](https://laya-ai.com/system-one-models) on laya-ai.com and refreshed automatically.
 
@@ -25,6 +25,13 @@ TypeSafe named the category with Jev on September 15, 2026. Within days, open mo
 | **Tev1-4B-experimental** | Together AI | Fine-tuned LLM, answers with one option letter | 4B | Weights license being finalized; code MIT | No, chat completions with 2 to 24 options | [Source](https://huggingface.co/togethercomputer/Tev1-4B-experimental) · [Guide](https://laya-ai.com/system-one-models/tev1) |
 | **GLiNER2.5-Decide** | Fastino | Encoder classifier | 340M (also 1B, and 287M multilingual) | Apache 2.0 | No, its own classify_text API | [Source](https://huggingface.co/fastino/GLiNER2.5-Decide) |
 | **OpenThai-SystemOne** | iApp Technology | Fine-tuned model with a slot head | 0.8B | Apache 2.0 | Yes, mirrors POST /v1/systemone | [Source](https://github.com/iapp-technology/openthai-systemone) |
+| **djev (DiffusionGemma-Jev)** | mmastrac | Training-free, reads decisions from a diffusion LLM | DiffusionGemma (26B-A4B in the DGX Spark recipe) | Apache 2.0 | Yes, POST /v1/systemone | [Source](https://github.com/mmastrac/djev) |
+| **Jev-Omni** | akhilaaa3 | Fine-tuned multimodal model | 12B (Gemma 4 12B) | Apache 2.0 | Not stated | [Source](https://huggingface.co/akhilaaa3/Jev-Omni) |
+| **Open-Jev** | Zefan Cai | LoRA adapter + scalar decision head | 2B, 9B, 27B (Qwen3.5) | Apache 2.0 | Yes, a local /v1/systemone server | [Source](https://github.com/Zefan-Cai/Open-Jev) |
+| **JevK5** | alibiserikbay | Fine-tuned LLM with calibrated letter readout | 4B (Qwen3.5-4B) | Apache 2.0 | Yes, TypeSafe-style /v1/systemone runtime | [Source](https://github.com/allebee/jevk5) |
+| **open-jev-deberta-v3-large** | kotoba-lang | Trained encoder, non-autoregressive | 434M (DeBERTa-v3-large) | Apache 2.0 | No, a Python library | [Source](https://huggingface.co/com-kotobalabs/open-jev-deberta-v3-large) |
+| **AgentJev** | malevrigns | LLM backbone + order-invariant candidate head | 0.6B (Qwen3-0.6B) | Apache 2.0 | No, its own server and client | [Source](https://github.com/malevrigns/agent-jev) |
+| **Jev-Style** | chaoliangUNSW | Fine-tuned LLM, one-token decision (GGUF) | 0.8B (v3); 2B (v1) | Apache 2.0 | No, chat completions with logprobs | [Source](https://jevstyle.com/) |
 
 ## Details
 
@@ -131,6 +138,62 @@ A Qwen3.5-0.8B text tower whose output head is replaced by a 256-way slot softma
 - **Runs on:** CUDA, MPS, CPU
 - **Languages:** Thai, English
 - [Source](https://github.com/iapp-technology/openthai-systemone)
+
+### djev (DiffusionGemma-Jev)
+
+Reads Jev-style decisions from DiffusionGemma, a discrete diffusion model, in one denoise step through vLLM. The djev-dev fork adds native image inputs and live camera sampling.
+
+- **Runs on:** NVIDIA GPU with vLLM
+- **Languages:** Not stated
+- [Source](https://github.com/mmastrac/djev)
+
+### Jev-Omni
+
+A decision classifier for text, images, audio and video, fine-tuned on 30,000 questions: a probability per option instead of an explanation. Reports 86.15% on matched JevBench groups (self-reported).
+
+- **Runs on:** NVIDIA GPU
+- **Languages:** Not stated
+- [Source](https://huggingface.co/akhilaaa3/Jev-Omni)
+
+### Open-Jev
+
+Scores the candidates you supply for choice, noul and score questions without generating an answer, using a trained head on top of Qwen3.5.
+
+- **Runs on:** NVIDIA GPU
+- **Languages:** Not stated
+- [Source](https://github.com/Zefan-Cai/Open-Jev)
+
+### JevK5
+
+Qwen3.5-4B with a merged LoRA, read out with the SemIf protocol and one calibration temperature. Questions with more than 16 options are read in several passes.
+
+- **Runs on:** Local GPU
+- **Languages:** English
+- [Source](https://github.com/allebee/jevk5)
+
+### open-jev-deberta-v3-large
+
+An independent reproduction of the Jev interface: choice (up to 255 options), score (2 to 10 levels) and noul in one forward pass, measured on public gold labels.
+
+- **Runs on:** Local CPU or GPU
+- **Languages:** English
+- [Source](https://huggingface.co/com-kotobalabs/open-jev-deberta-v3-large)
+
+### AgentJev
+
+The language-model head is removed and a candidate head scores the options. The published checkpoint judges whether a coding task is actually finished.
+
+- **Runs on:** Local CPU or GPU
+- **Languages:** English, Chinese
+- [Source](https://github.com/malevrigns/agent-jev)
+
+### Jev-Style
+
+GGUF decision models that return calibrated option probabilities from a single token. v3 reports 79.2% on 2,000 typed decisions and takes 25,600-token inputs.
+
+- **Runs on:** llama.cpp, LM Studio (CPU or GPU)
+- **Languages:** 51 (v3)
+- [Source](https://jevstyle.com/)
 
 ## Choosing a model
 
