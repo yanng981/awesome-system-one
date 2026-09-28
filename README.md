@@ -4,7 +4,7 @@ A curated list of **System One decision models**: models that answer typed quest
 
 TypeSafe named the category with Jev on September 15, 2026. Within days, open models appeared that you can download, fine-tune and self-host, several of them behind the same `POST /v1/systemone` API.
 
-- **20 models**, last checked against each project's own pages on **2026-09-27**.
+- **21 models**, last checked against each project's own pages on **2026-09-28**.
 - Facts come from each project's README or model card. Benchmarks are self-reported and not directly comparable.
 - The list is generated from the [System One models comparison](https://laya-ai.com/system-one-models) on laya-ai.com and refreshed automatically.
 
@@ -15,6 +15,7 @@ TypeSafe named the category with Jev on September 15, 2026. Within days, open mo
 | **TypeSafe Jev** | TypeSafe AI | Hosted model | Undisclosed | Proprietary | Reference API | [Source](https://docs.typesafe.ai/introduction) |
 | **Laya** | Convai Innovations | Trained encoder with decision heads | 322M / 421M | Apache 2.0 | Yes, through laya-serve | [Source](https://github.com/NandhaKishorM/laya) · [Guide](https://laya-ai.com/models) |
 | **Kev** | Jared Palmer | Fine-tuned Qwen models | 0.8B / 4B / 9B / 27B | Apache 2.0 | Yes, the TypeSafe SDK works unchanged | [Source](https://github.com/jaredpalmer/kev) · [Guide](https://laya-ai.com/system-one-models/kev) |
+| **OpenDecider** | Manjunath Shiva | Trained encoder (nano); fine-tuned Qwen (small, medium) | ~400M / 4B / 30B MoE | Apache 2.0 | No, a Python library | [Source](https://github.com/manjunathshiva/opendecider) |
 | **Decider** | Mapika | Fine-tuned Qwen models | 2B / 4B / 35B MoE | Apache 2.0 | Yes, a /v1/systemone endpoint | [Source](https://github.com/Mapika/decider) |
 | **Von** | wfzyx | Trained encoder, non-autoregressive | 395M | Apache 2.0 | Yes, a /v1/systemone server | [Source](https://github.com/wfzyx/von) · [Guide](https://laya-ai.com/system-one-models/von) |
 | **Bespoke Nimble** | Bespoke Labs | Fine-tuned model with training recipe | 9B | Not stated in the repository | No, its own schema format | [Source](https://github.com/bespokelabsai/nimble) |
@@ -58,6 +59,14 @@ Small Jev-like models on Qwen3.5 and Qwen3.8 bases. Each checkpoint ships a fitt
 - **Runs on:** Apple Silicon Mac (0.8B) up to one 80 GB GPU (27B)
 - **Languages:** Not stated
 - [Source](https://github.com/jaredpalmer/kev) · [Guide](https://laya-ai.com/system-one-models/kev)
+
+### OpenDecider
+
+Distilled from two open teacher models. The 400M nano model scores 0.796 on the typed-decisions benchmark, against 0.766 for Laya's fine-tuned checkpoint and 0.754 for Jev (author's measurements). Early release, updated often.
+
+- **Runs on:** CPU, CUDA, Apple Silicon (MLX builds); 30B needs several NVIDIA GPUs
+- **Languages:** English (only English evaluated so far)
+- [Source](https://github.com/manjunathshiva/opendecider)
 
 ### Decider
 
