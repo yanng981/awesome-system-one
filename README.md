@@ -4,7 +4,7 @@ A curated list of **System One decision models**: models that answer typed quest
 
 TypeSafe named the category with Jev on September 15, 2026. Within days, open models appeared that you can download, fine-tune and self-host, several of them behind the same `POST /v1/systemone` API.
 
-- **21 models**, last checked against each project's own pages on **2026-09-28**.
+- **25 models**, last checked against each project's own pages on **2026-09-30**.
 - Facts come from each project's README or model card. Benchmarks are self-reported and not directly comparable.
 - The list is generated from the [System One models comparison](https://laya-ai.com/system-one-models) on laya-ai.com and refreshed automatically.
 
@@ -13,6 +13,7 @@ TypeSafe named the category with Jev on September 15, 2026. Within days, open mo
 | Model | Maker | Approach | Size | License | Jev API | Links |
 |---|---|---|---|---|---|---|
 | **TypeSafe Jev** | TypeSafe AI | Hosted model | Undisclosed | Proprietary | Reference API | [Source](https://docs.typesafe.ai/introduction) |
+| **Liquid AI d1** | Liquid AI | Hosted model | Undisclosed | Proprietary | Yes, POST /decisions/v1/systemone; works with the TypeSafe SDKs | [Source](https://docs.liquid.ai/lfm/models/decision-models) |
 | **Laya** | Convai Innovations | Trained encoder with decision heads | 322M / 421M | Apache 2.0 | Yes, through laya-serve | [Source](https://github.com/NandhaKishorM/laya) · [Guide](https://laya-ai.com/models) |
 | **Kev** | Jared Palmer | Fine-tuned Qwen models | 0.8B / 4B / 9B / 27B | Apache 2.0 | Yes, the TypeSafe SDK works unchanged | [Source](https://github.com/jaredpalmer/kev) · [Guide](https://laya-ai.com/system-one-models/kev) |
 | **OpenDecider** | Manjunath Shiva | Trained encoder (nano); fine-tuned Qwen (small, medium) | ~400M / 4B / 30B MoE | Apache 2.0 | No, a Python library | [Source](https://github.com/manjunathshiva/opendecider) |
@@ -33,6 +34,9 @@ TypeSafe named the category with Jev on September 15, 2026. Within days, open mo
 | **open-jev-deberta-v3-large** | kotoba-lang | Trained encoder, non-autoregressive | 434M (DeBERTa-v3-large) | Apache 2.0 | No, a Python library | [Source](https://huggingface.co/com-kotobalabs/open-jev-deberta-v3-large) |
 | **AgentJev** | malevrigns | LLM backbone + order-invariant candidate head | 0.6B (Qwen3-0.6B) | Apache 2.0 | No, its own server and client | [Source](https://github.com/malevrigns/agent-jev) |
 | **Jev-Style** | chaoliangUNSW | Fine-tuned LLM, one-token decision (GGUF) | 0.8B (v3); 2B (v1) | Apache 2.0 | No, chat completions with logprobs | [Source](https://jevstyle.com/) |
+| **Anarkali** | ToufiqQureshi | Trained encoder (Ettin), non-autoregressive | 68M | Apache 2.0 | Yes, POST /v1/systemone | [Source](https://github.com/ToufiqQureshi/anarkali) |
+| **Jeeves** | PostHog | Fine-tuned LLM (LoRA + pointer head) that reasons before deciding | 9B (Qwen3.5-9B) | MIT code, Apache 2.0 weights | Yes, a local /v1/systemone server | [Source](https://github.com/PostHog/jeeves) |
+| **OpenJev-4B** | ejhshen (Junhao Shen) | LLM backbone + option-set decision head, non-autoregressive | 4B (Qwen3.5-4B) | MIT | Yes, a local /v1/systemone server | [Source](https://github.com/ejhshen/OpenJev) |
 
 ## Details
 
@@ -43,6 +47,14 @@ The hosted model that introduced the System One name and the choice, score and n
 - **Runs on:** TypeSafe cloud only
 - **Languages:** Provider-dependent
 - [Source](https://docs.typesafe.ai/introduction)
+
+### Liquid AI d1
+
+The first decision model from Liquid AI, released September 29, 2026 with a free tier (model name d1:free); paid pricing is not published yet. AlphaSignal reports it took first place on the Jev Decision Index on Hugging Face, ahead of Jev 1.13.
+
+- **Runs on:** Liquid API only (no downloadable weights)
+- **Languages:** Not stated
+- [Source](https://docs.liquid.ai/lfm/models/decision-models)
 
 ### Laya
 
@@ -203,6 +215,30 @@ GGUF decision models that return calibrated option probabilities from a single t
 - **Runs on:** llama.cpp, LM Studio (CPU or GPU)
 - **Languages:** 51 (v3)
 - [Source](https://jevstyle.com/)
+
+### Anarkali
+
+A 68M encoder that beats Jev on the public typed-decisions benchmark (74.0% vs 72.7%) and comes within 2.6 points of Laya at a sixth of the size, with the lowest calibration error of the three (author-reported).
+
+- **Runs on:** CPU or GPU via a single 273 MB ONNX file
+- **Languages:** English only
+- [Source](https://github.com/ToufiqQureshi/anarkali)
+
+### Jeeves
+
+Thinks before it answers: 0.935 on the public JevBench items vs 0.866 for Jev (0.865 vs 0.730 on the hard tier), at about 0.3 s per request without thinking and a 3.3 s median with it on one H100. Jev still leads on MMLU-Pro (author-reported).
+
+- **Runs on:** CUDA GPU (FP8 kernel needs Hopper)
+- **Languages:** Not stated
+- [Source](https://github.com/PostHog/jeeves)
+
+### OpenJev-4B
+
+Options and criteria are inputs, so the output follows whatever candidates a request supplies, and reordering them does not change the answer. Trained with SFT then RL on the public OpenJevData-140k set; training code included.
+
+- **Runs on:** CUDA GPU
+- **Languages:** Not stated
+- [Source](https://github.com/ejhshen/OpenJev)
 
 ## Choosing a model
 
