@@ -4,7 +4,7 @@ A curated list of **System One decision models**: models that answer typed quest
 
 TypeSafe named the category with Jev on September 15, 2026. Within days, open models appeared that you can download, fine-tune and self-host, several of them behind the same `POST /v1/systemone` API.
 
-- **25 models**, last checked against each project's own pages on **2026-09-30**.
+- **26 models**, last checked against each project's own pages on **2026-10-01**.
 - Facts come from each project's README or model card. Benchmarks are self-reported and not directly comparable.
 - The list is generated from the [System One models comparison](https://laya-ai.com/system-one-models) on laya-ai.com and refreshed automatically.
 
@@ -14,9 +14,10 @@ TypeSafe named the category with Jev on September 15, 2026. Within days, open mo
 |---|---|---|---|---|---|---|
 | **TypeSafe Jev** | TypeSafe AI | Hosted model | Undisclosed | Proprietary | Reference API | [Source](https://docs.typesafe.ai/introduction) |
 | **Liquid AI d1** | Liquid AI | Hosted model | Undisclosed | Proprietary | Yes, POST /decisions/v1/systemone; works with the TypeSafe SDKs | [Source](https://docs.liquid.ai/lfm/models/decision-models) |
+| **OpenAI Decisions API** | OpenAI | Hosted model | Undisclosed (a version of GPT-6 Luna) | Proprietary | No, its own interface (not documented yet) | [Source](https://the-decoder.com/openai-expands-codex-and-its-api-at-devday-with-security-scans-a-decisions-api-and-ultrafast/) |
 | **Laya** | Convai Innovations | Trained encoder with decision heads | 322M / 421M | Apache 2.0 | Yes, through laya-serve | [Source](https://github.com/NandhaKishorM/laya) · [Guide](https://laya-ai.com/models) |
 | **Kev** | Jared Palmer | Fine-tuned Qwen models | 0.8B / 4B / 9B / 27B | Apache 2.0 | Yes, the TypeSafe SDK works unchanged | [Source](https://github.com/jaredpalmer/kev) · [Guide](https://laya-ai.com/system-one-models/kev) |
-| **OpenDecider** | Manjunath Shiva | Trained encoder (nano); fine-tuned Qwen (small, medium) | ~400M / 4B / 30B MoE | Apache 2.0 | No, a Python library | [Source](https://github.com/manjunathshiva/opendecider) |
+| **OpenDecider** | Manjunath Shiva | Trained encoder (nano); fine-tuned Qwen (small, medium) | ~400M / 4B / 30B MoE | Apache 2.0 | Yes, `opendecider serve` (0.2.0+): POST /v1/systemone and /batch | [Source](https://github.com/manjunathshiva/opendecider) |
 | **Decider** | Mapika | Fine-tuned Qwen models | 2B / 4B / 35B MoE | Apache 2.0 | Yes, a /v1/systemone endpoint | [Source](https://github.com/Mapika/decider) |
 | **Von** | wfzyx | Trained encoder, non-autoregressive | 395M | Apache 2.0 | Yes, a /v1/systemone server | [Source](https://github.com/wfzyx/von) · [Guide](https://laya-ai.com/system-one-models/von) |
 | **Bespoke Nimble** | Bespoke Labs | Fine-tuned model with training recipe | 9B | Not stated in the repository | No, its own schema format | [Source](https://github.com/bespokelabsai/nimble) |
@@ -55,6 +56,14 @@ The first decision model from Liquid AI, released September 29, 2026 with a free
 - **Runs on:** Liquid API only (no downloadable weights)
 - **Languages:** Not stated
 - [Source](https://docs.liquid.ai/lfm/models/decision-models)
+
+### OpenAI Decisions API
+
+Announced at DevDay on September 29, 2026: picks one answer from a list you define, 150 ms against 1.6 s for regular GPT-6 Luna (OpenAI figures). Limited preview; price and probability output not published.
+
+- **Runs on:** OpenAI API only
+- **Languages:** Not stated; accepts text or images
+- [Source](https://the-decoder.com/openai-expands-codex-and-its-api-at-devday-with-security-scans-a-decisions-api-and-ultrafast/)
 
 ### Laya
 
