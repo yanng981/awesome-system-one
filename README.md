@@ -4,7 +4,7 @@ A curated list of **System One decision models**: models that answer typed quest
 
 TypeSafe named the category with Jev on September 15, 2026. Within days, open models appeared that you can download, fine-tune and self-host, several of them behind the same `POST /v1/systemone` API.
 
-- **26 models**, last checked against each project's own pages on **2026-10-01**.
+- **27 models**, last checked against each project's own pages on **2026-10-02**.
 - Facts come from each project's README or model card. Benchmarks are self-reported and not directly comparable.
 - The list is generated from the [System One models comparison](https://laya-ai.com/system-one-models) on laya-ai.com and refreshed automatically.
 
@@ -15,6 +15,7 @@ TypeSafe named the category with Jev on September 15, 2026. Within days, open mo
 | **TypeSafe Jev** | TypeSafe AI | Hosted model | Undisclosed | Proprietary | Reference API | [Source](https://docs.typesafe.ai/introduction) |
 | **Liquid AI d1** | Liquid AI | Hosted model | Undisclosed | Proprietary | Yes, POST /decisions/v1/systemone; works with the TypeSafe SDKs | [Source](https://docs.liquid.ai/lfm/models/decision-models) |
 | **OpenAI Decisions API** | OpenAI | Hosted model | Undisclosed (a version of GPT-6 Luna) | Proprietary | No, its own interface (not documented yet) | [Source](https://the-decoder.com/openai-expands-codex-and-its-api-at-devday-with-security-scans-a-decisions-api-and-ultrafast/) |
+| **Cloudflare Clef** | Cloudflare | Fine-tuned Qwen models with a joint decision head | 27B (Clef) / 9B (Clef-Flash) | Apache 2.0 | Yes, Jev / SystemOne request and response format | [Source](https://huggingface.co/Cloudflare/clef) · [Guide](https://laya-ai.com/cloudflare-clef) |
 | **Laya** | Convai Innovations | Trained encoder with decision heads | 322M / 421M | Apache 2.0 | Yes, through laya-serve | [Source](https://github.com/NandhaKishorM/laya) · [Guide](https://laya-ai.com/models) |
 | **Kev** | Jared Palmer | Fine-tuned Qwen models | 0.8B / 4B / 9B / 27B | Apache 2.0 | Yes, the TypeSafe SDK works unchanged | [Source](https://github.com/jaredpalmer/kev) · [Guide](https://laya-ai.com/system-one-models/kev) |
 | **OpenDecider** | Manjunath Shiva | Trained encoder (nano); fine-tuned Qwen (small, medium) | ~400M / 4B / 30B MoE | Apache 2.0 | Yes, `opendecider serve` (0.2.0+): POST /v1/systemone and /batch | [Source](https://github.com/manjunathshiva/opendecider) |
@@ -64,6 +65,14 @@ Announced at DevDay on September 29, 2026: picks one answer from a list you defi
 - **Runs on:** OpenAI API only
 - **Languages:** Not stated; accepts text or images
 - [Source](https://the-decoder.com/openai-expands-codex-and-its-api-at-devday-with-security-scans-a-decisions-api-and-ultrafast/)
+
+### Cloudflare Clef
+
+Released October 1, 2026 with open weights on Hugging Face and hosted on Workers AI (Clef-Flash $0.09 per 1M input tokens). Cloudflare reports Clef leading 7 of 10 decision benchmarks against Jev, and Clef-Flash at 38.8 ms median latency (self-reported).
+
+- **Runs on:** Workers AI, or your own large GPU (tested on one H200)
+- **Languages:** Not stated; accepts text, JSON, images and video
+- [Source](https://huggingface.co/Cloudflare/clef) · [Guide](https://laya-ai.com/cloudflare-clef)
 
 ### Laya
 
