@@ -4,7 +4,7 @@ A curated list of **System One decision models**: models that answer typed quest
 
 TypeSafe named the category with Jev on September 15, 2026. Within days, open models appeared that you can download, fine-tune and self-host, several of them behind the same `POST /v1/systemone` API.
 
-- **27 models**, last checked against each project's own pages on **2026-10-02**.
+- **28 models**, last checked against each project's own pages on **2026-10-02**.
 - Facts come from each project's README or model card. Benchmarks are self-reported and not directly comparable.
 - The list is generated from the [System One models comparison](https://laya-ai.com/system-one-models) on laya-ai.com and refreshed automatically.
 
@@ -13,9 +13,10 @@ TypeSafe named the category with Jev on September 15, 2026. Within days, open mo
 | Model | Maker | Approach | Size | License | Jev API | Links |
 |---|---|---|---|---|---|---|
 | **TypeSafe Jev** | TypeSafe AI | Hosted model | Undisclosed | Proprietary | Reference API | [Source](https://docs.typesafe.ai/introduction) |
-| **Liquid AI d1** | Liquid AI | Hosted model | Undisclosed | Proprietary | Yes, POST /decisions/v1/systemone; works with the TypeSafe SDKs | [Source](https://docs.liquid.ai/lfm/models/decision-models) |
-| **OpenAI Decisions API** | OpenAI | Hosted model | Undisclosed (a version of GPT-6 Luna) | Proprietary | No, its own interface (not documented yet) | [Source](https://the-decoder.com/openai-expands-codex-and-its-api-at-devday-with-security-scans-a-decisions-api-and-ultrafast/) |
-| **Cloudflare Clef** | Cloudflare | Fine-tuned Qwen models with a joint decision head | 27B (Clef) / 9B (Clef-Flash) | Apache 2.0 | Yes, Jev / SystemOne request and response format | [Source](https://huggingface.co/Cloudflare/clef) · [Guide](https://laya-ai.com/cloudflare-clef) |
+| **Liquid AI d1** | Liquid AI | Hosted model, plus open-weight models | d1-3B (3.1B), d1-omni-600M (587M); hosted d1 undisclosed | LFM Open License v1.0 (open weights); hosted d1 proprietary | Hosted: yes, POST /decisions/v1/systemone, works with the TypeSafe SDKs; open weights: same question format through Transformers | [Source](https://huggingface.co/LiquidAI/d1-3B) |
+| **OpenAI Decisions API** | OpenAI | Hosted model | Undisclosed (a version of GPT-6 Luna) | Proprietary | No, its own endpoint (POST /v1/decisions) with predicate, choice and score questions | [Source](https://developers.openai.com/api/docs/guides/decisions) |
+| **Microsoft-Decision-1** | Microsoft | Hosted model (post-trained Qwen3.5-9B) | 9B | Proprietary | Jev request body (noul, choice, score) at its own Azure endpoint, /providers/microsoft/v1/systemone | [Source](https://commandline.microsoft.com/microsoft-decision-1-model-foundry/) · [Guide](https://laya-ai.com/microsoft-decision-1) |
+| **Cloudflare Clef** | Cloudflare | Fine-tuned Qwen models with a joint decision head | 27B (Clef) / 9B (Clef-Flash) / 30B-A3B (Clef-Omni) | Apache 2.0 | Yes, Jev / SystemOne request and response format | [Source](https://huggingface.co/Cloudflare/clef) · [Guide](https://laya-ai.com/cloudflare-clef) |
 | **Laya** | Convai Innovations | Trained encoder with decision heads | 322M / 421M | Apache 2.0 | Yes, through laya-serve | [Source](https://github.com/NandhaKishorM/laya) · [Guide](https://laya-ai.com/models) |
 | **Kev** | Jared Palmer | Fine-tuned Qwen models | 0.8B / 4B / 9B / 27B | Apache 2.0 | Yes, the TypeSafe SDK works unchanged | [Source](https://github.com/jaredpalmer/kev) · [Guide](https://laya-ai.com/system-one-models/kev) |
 | **OpenDecider** | Manjunath Shiva | Trained encoder (nano); fine-tuned Qwen (small, medium) | ~400M / 4B / 30B MoE | Apache 2.0 | Yes, `opendecider serve` (0.2.0+): POST /v1/systemone and /batch | [Source](https://github.com/manjunathshiva/opendecider) |
@@ -52,26 +53,34 @@ The hosted model that introduced the System One name and the choice, score and n
 
 ### Liquid AI d1
 
-The first decision model from Liquid AI, released September 29, 2026 with a free tier (model name d1:free); paid pricing is not published yet. AlphaSignal reports it took first place on the Jev Decision Index on Hugging Face, ahead of Jev 1.13.
+Liquid AI launched the hosted d1 on September 29, 2026 with a free tier (model name d1:free). On October 5 it released open weights on Hugging Face: d1-3B (text and images, built on LFM2.5-VL-3B, 32K context) and d1-omni-600M (text with images or audio). Liquid reports d1-3B at 48.57 on Decision Index 0.2.1, the best score under 10B (self-reported).
 
-- **Runs on:** Liquid API only (no downloadable weights)
-- **Languages:** Not stated
-- [Source](https://docs.liquid.ai/lfm/models/decision-models)
+- **Runs on:** Liquid API, or your own hardware (d1-3B: 8 ms a decision on an RTX 4090, 30 ms on an Apple M5 Pro, per Liquid)
+- **Languages:** 16 listed on the d1-3B card; d1-3B also reads images, d1-omni-600M images or audio
+- [Source](https://huggingface.co/LiquidAI/d1-3B)
 
 ### OpenAI Decisions API
 
-Announced at DevDay on September 29, 2026: picks one answer from a list you define, 150 ms against 1.6 s for regular GPT-6 Luna (OpenAI figures). Limited preview; price and probability output not published.
+Announced at DevDay on September 29, 2026 and in public beta since October 6: $0.10 per 1M input tokens, with no charge for output or cache. Returns probabilities and a confidence for choice and score answers; OpenAI says it answers about 10x faster than the Responses API.
 
 - **Runs on:** OpenAI API only
 - **Languages:** Not stated; accepts text or images
-- [Source](https://the-decoder.com/openai-expands-codex-and-its-api-at-devday-with-security-scans-a-decisions-api-and-ultrafast/)
+- [Source](https://developers.openai.com/api/docs/guides/decisions)
+
+### Microsoft-Decision-1
+
+Announced October 9, 2026 and available in Microsoft Foundry (Preview in the catalog) at $0.042 per 1M input tokens, the same as Jev, with output free. Microsoft reports the highest accuracy across 36 benchmarks and about 35x lower median latency than GPT-6 Sol (self-reported); Clef is not in its comparison, and Jev was added only in a later update.
+
+- **Runs on:** Microsoft Foundry only
+- **Languages:** Not stated; text or JSON only, up to 32,768 tokens
+- [Source](https://commandline.microsoft.com/microsoft-decision-1-model-foundry/) · [Guide](https://laya-ai.com/microsoft-decision-1)
 
 ### Cloudflare Clef
 
-Released October 1, 2026 with open weights on Hugging Face and hosted on Workers AI (Clef-Flash $0.09 per 1M input tokens). Cloudflare reports Clef leading 7 of 10 decision benchmarks against Jev, and Clef-Flash at 38.8 ms median latency (self-reported).
+Released October 1, 2026 with open weights on Hugging Face and hosted on Workers AI. On October 9 Cloudflare added Clef-Omni (audio input, $0.15 per 1M input tokens) and cut Clef-Flash to $0.038, below Jev, with a 24,576-token hosted context. Cloudflare reports Clef leading 7 of 10 decision benchmarks against Jev, and Clef-Flash at 38.8 ms median latency (self-reported).
 
 - **Runs on:** Workers AI, or your own large GPU (tested on one H200)
-- **Languages:** Not stated; accepts text, JSON, images and video
+- **Languages:** Not stated; accepts text, JSON, images and video, and Clef-Omni also audio
 - [Source](https://huggingface.co/Cloudflare/clef) · [Guide](https://laya-ai.com/cloudflare-clef)
 
 ### Laya
